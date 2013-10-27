@@ -36,3 +36,8 @@
 {
 	border: none;
 }
+
+.openBadgesImage
+{
+  max-height: 120px;
+}

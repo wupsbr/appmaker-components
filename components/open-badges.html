@@ -45,6 +45,17 @@
 
       	this.message = this.getAttribute('defaultMessage') || "";
       },
+      loadBadgeImage: function ()
+      {
+          $.get("http://badger.openbadges.org/v2/badge/" + this.claimCode, {
+            dataType:'json'
+          },
+          function(data)
+          {
+            console.log(data.badge.image);
+            $(".openBadgesImage").attr("src",data.badge.image);
+          });
+      },
       claimBadge: function (objValue, myChannel)
       {
         var theClaimMessage = this.claimMessage + " " + this.claimUrl + this.claimCode;
@@ -69,7 +80,8 @@
           type: "text",
           description: "The Open Badge default claim code",
           postset: function(v) {
-            this.claimCode;
+            this.claimCode = v;
+            this.loadBadgeImage();
           }
         }
       },
@@ -93,6 +105,7 @@
           this.lookAtMe();
           this.claimCode = obj.toString();
           this.claimButton.disabled = false;
+          this.loadBadgeImage();
         },
         updateIssuing: function (objOpenBadges, myChannel)
         {
